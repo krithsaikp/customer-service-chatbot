@@ -54,7 +54,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained("google/flan-t5-base")
 model.eval()
 
 # Retrieval and Generation
-def answer_query(query, threshold=2.0):
+def answer_query(query, threshold=1.5):
     global history
 
     # Embed query and retrieve context
@@ -62,7 +62,7 @@ def answer_query(query, threshold=2.0):
     D, I = index.search(np.array(q_emb), k=2)
 
     if D[0][0] > threshold:
-        retrieved = "No relevant context found."
+       return "Sorry I'm not sure, can you please clarify?"
     else:
         retrieved = "\n".join([documents[i] for i in I[0]])
 
